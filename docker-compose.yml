@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+    gre_nginx:
+        image: nginx
+        container_name: gre-apis-nginx
+        restart: always
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./logs/nginx/:/var/log/nginx/
+        ports:
+            - 8007:80
+        networks:
+            local:
+                ipv4_address: 172.16.1.7
+
+    gre_api_base_image:
+        build: ./
+        container_name: gre-api-base-image
+    api_a3_test:
+        extends:
+            file: ../gre-a3-test-api/docker/docker-compose.yml
+            service: api_a3_test
+
+networks:
+    local:
+        name: edw-sfw-local-docker_local
+        external: true
+
+

@@ -1,0 +1,7 @@
+/.idea
+/logs
+/data
+/nginx/ssl
+/.DS_Store
+/env/common.env
+/nginx/.DS_Store
