@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.2.1-apache
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends locales apt-utils git libicu-dev g++ libpng-dev libxml2-dev  \
@@ -18,6 +18,11 @@ RUN pecl install mongodb && docker-php-ext-enable mongodb
 RUN pecl install amqp && docker-php-ext-enable amqp
 RUN pecl install imagick && docker-php-ext-enable imagick
 RUN pecl install redis && docker-php-ext-enable redis
+
+# Installation de SQLServer pour PHP8
+RUN apt-get install -y unixodbc-dev
+RUN pecl install sqlsrv && printf "; priority=20\nextension=sqlsrv.so\n" > /usr/local/etc/php/conf.d/docker-php-ext-sqlsrv.ini
+RUN pecl install pdo_sqlsrv && printf "; priority=20\nextension=pdo_sqlsrv.so\n" > /usr/local/etc/php/conf.d/docker-php-ext-pdo_sqlsrv.ini
 
 
 
